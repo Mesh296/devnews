@@ -10,8 +10,8 @@ const PORT = process.env.PORT
 const db = require('./src/providers/db.js')
 
 //route
-const userRouter = require('./src/routes/userRouter.js');
-app.use('/user', userRouter);
+const routes = require('./src/routes/index.js');
+app.use('/', routes);
 
 // use routes
 app.get('/', (req, res) => {
