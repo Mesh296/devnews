@@ -6,7 +6,7 @@ var router = express.Router();
 router.get('/', async(req, res) => {
     res.json("User Router");
 })
-router.get('/all', authentication, async(req, res) => {
+router.get('/all', async(req, res) => {
     try {
         const users = await userService.getAll();
         return res.status(201).send(users.map(user => user.toJSON()))
@@ -50,5 +50,41 @@ router.get('/me', authentication, async(req, res) => {
     }
 })
 
+router.put('/update/:id', authentication, async(req, res) => {
+    try {
+        const userId = req.params.id;
+        const loggedInUserId = req.user.id;
+        console.log(userId)
+        console.log(loggedInUserId)
+        if (userId != loggedInUserId) {
+            throw new Error('Please login to right account');
+        }
+
+        const userData = req.body;
+        const result = await userService.updateUser(userData, userId);
+        console.log(result)
+        res.status(201).json("Your information has been updated successfully!");
+    } catch (error) {
+        res.status(400).json({
+            message: error.message
+        });
+    }
+})
+
+router.delete('/delete/:id', authentication, async(req, res) => {
+    try {
+        const userId = req.params.id;
+        const loggedInUserId = req.user.id;
+        if (userId != loggedInUserId) {
+            throw new Error('Please login to right account');
+        }
+        const result = await userService.deleteUser(userId);
+        res.status(201).json("User has been deleted successfully!");
+    } catch (error) {
+        res.status(400).json({
+            message: error.message
+        });
+    }
+})
 
 module.exports = router

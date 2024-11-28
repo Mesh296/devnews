@@ -1,4 +1,3 @@
-const { Secret, JwtPayLoad } = require('jsonwebtoken');
 const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv').config()
 const UserService = require('../services/user/userService')

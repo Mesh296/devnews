@@ -73,4 +73,24 @@ const getById = async(userId) => {
     }
 }
 
-module.exports = { register, getAll, login, getById };
+const updateUser = async(userData, userId) => {
+    try {
+        await getById(userId);
+        const updatedUser = await User.update(userData, {
+            where: {id: userId}
+        })
+        return updatedUser;
+    } catch (error) {
+        throw new Error(error.message);
+    }   
+}
+
+const deleteUser = async(userId) => {
+    try {
+        await User.destroy({where: {id: userId}})
+    } catch (error) {
+        throw new Error(error.message);
+    }
+}
+
+module.exports = { register, getAll, login, getById, updateUser, deleteUser };
