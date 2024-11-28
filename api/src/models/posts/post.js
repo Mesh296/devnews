@@ -10,11 +10,6 @@ module.exports = (sequelize) => {
         description: {
             type: DataTypes.STRING
         },
-        postDate: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            defaultValue: DataTypes.NOW
-        },
         originalUrl: {
             type: DataTypes.STRING,
             allowNull: true,
