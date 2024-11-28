@@ -8,6 +8,7 @@ const initPost = require('./posts/post');
 const initSavedPost = require('./savedPosts/savePost');
 const initUser = require('./users/user');
 const initVote = require('./votes/vote');
+const initRefreshToken = require('./auth/refreshToken')
 
 // Initialize models
 const Category = initCategory(sequelize);
@@ -17,6 +18,7 @@ const Post = initPost(sequelize);
 const SavedPost = initSavedPost(sequelize);
 const User = initUser(sequelize);
 const Vote = initVote(sequelize);
+const RefreshToken = initRefreshToken(sequelize)
 
 // Define associations
 Category.hasMany(PostCategory, { foreignKey: 'categoryId', as: 'postCategories' });
@@ -40,9 +42,12 @@ User.hasMany(Post, { foreignKey: 'userId', as: 'posts' });
 User.hasMany(Comment, { foreignKey: 'userId', as: 'comments' });
 User.hasMany(Vote, { foreignKey: 'userId', as: 'votes' });
 User.hasMany(SavedPost, { foreignKey: 'userId', as: 'savedPosts' });
+User.hasOne(RefreshToken, { foreignKey: 'userId', as: 'refreshToken' });
 
 Vote.belongsTo(Post, { foreignKey: 'postId', as: 'post' });
 Vote.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+
+RefreshToken.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 
 
 // Export models
@@ -54,5 +59,6 @@ module.exports = {
     Post, 
     SavedPost, 
     User, 
-    Vote 
+    Vote,
+    RefreshToken, 
 };
