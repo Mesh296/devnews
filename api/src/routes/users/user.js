@@ -1,7 +1,7 @@
 const express = require('express');
-const userService = require('../../services/user/userService.js')
+const userService = require('../../services/users/userService.js')
 const authentication = require('../../middlewares/authentication.js')
-var router = express.Router();
+const router = express.Router();
 
 router.get('/', async(req, res) => {
     res.json("User Router");
@@ -15,13 +15,24 @@ router.get('/all', async(req, res) => {
     }
 })
 
+router.get('/user/:id', async(req, res) => {
+    try {
+        const userId = req.params.id;
+        const user = await userService.getById(userId);
+        return res.status(201).json(user)
+    } catch (error) {
+        return res.status(400).json({message: error.message})
+    }
+})
+
+
 router.post('/register', async(req, res) => {
     try {
         const userData = req.body;
         const result = await userService.register(userData);
-        res.status(201).json(result);
+        return res.status(201).json(result);
     } catch (error) {
-        res.status(400).json({
+        return res.status(400).json({
             message: error.message || 'Error registering user'
         });
     }
@@ -31,9 +42,9 @@ router.post('/login', async(req, res) => {
     try {
         const {username, password} = req.body;
         const result = await userService.login(username, password);
-        res.status(201).json(result)
+        return res.status(201).json(result)
     } catch (error) {
-        res.status(403).json({
+        return res.status(403).json({
             message: error.message || 'Error logining user'
         });
     }
@@ -42,9 +53,9 @@ router.post('/login', async(req, res) => {
 router.get('/me', authentication, async(req, res) => {
     try {
         const result = await userService.getById(req.user.id)
-        res.status(201).json(result)
+        return res.status(201).json(result)
     } catch (error) {
-        res.status(403).json({
+        return res.status(403).json({
             message: error.message || 'User not found'
         });
     }
@@ -63,9 +74,9 @@ router.put('/update/:id', authentication, async(req, res) => {
         const userData = req.body;
         const result = await userService.updateUser(userData, userId);
         console.log(result)
-        res.status(201).json("Your information has been updated successfully!");
+        return res.status(201).json("Your information has been updated successfully!");
     } catch (error) {
-        res.status(400).json({
+        return res.status(400).json({
             message: error.message
         });
     }

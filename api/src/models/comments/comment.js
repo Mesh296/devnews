@@ -8,6 +8,10 @@ module.exports = (sequelize) => {
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true,
         },
+        body: {
+            type: DataTypes.STRING,
+            allowNull: false
+        }
     })
     return Comment;
 }

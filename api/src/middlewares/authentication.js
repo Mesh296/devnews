@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv').config()
-const UserService = require('../services/user/userService')
+const UserService = require('../services/users/userService')
 
 if (!process.env.SECRET_KEY) {
     throw new Error('Missing SECRET_KEY in environment variables');

@@ -75,11 +75,22 @@ const getById = async(userId) => {
 
 const updateUser = async(userData, userId) => {
     try {
-        await getById(userId);
-        const updatedUser = await User.update(userData, {
+        const existingUser = await getById(userId);
+        if (!existingUser) {
+            throw new Error(`User with ID ${userId} not found`);
+        }
+
+        const [updated] = await User.update(userData, {
             where: {id: userId}
         })
+
+        if (updated === 0) {
+            throw new Error(`Failed to update user with ID ${userId}`);
+        }
+
+        const updatedUser = await getById(userId);
         return updatedUser;
+
     } catch (error) {
         throw new Error(error.message);
     }   
