@@ -13,6 +13,16 @@ router.get('/post/:id', async(req, res) => {
     }
 })
 
+router.get('/search', async(req, res) => {
+    try {
+        const q = req.query.q
+        const posts = await postService.searchPost(q || 'golang')
+        return res.status(201).json(posts)
+    } catch (error) {
+        return res.status(400).json({message: error.message})
+    }
+})
+
 router.get('/all', async(req, res) => {
     try {
         const posts = await postService.getAll();

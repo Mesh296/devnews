@@ -1,9 +1,27 @@
 const { Post } = require('../../models');
+const { Op, Sequelize } = require("sequelize");
 
 const createPost = async (data) => {
     try {
         const post = await Post.create(data);
         return post;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+}
+
+const searchPost = async (data) => {
+    try {
+        const formattedQuery = data.replace(/\s+/g, '&');
+        const posts = await Post.findAll({
+            where: {
+                [Op.or]: [
+                    { title: { [Op.match]: Sequelize.fn('to_tsquery', formattedQuery) } },
+                    { description: { [Op.match]: Sequelize.fn('to_tsquery', formattedQuery) } },
+                ]
+            }
+        })
+        return posts;
     } catch (error) {
         throw new Error(error.message);
     }
@@ -74,4 +92,4 @@ const deletePost = async (postId, userId) => {
     }
 }
 
-module.exports = { createPost, updatePost, deletePost, getById, getAll }
+module.exports = { createPost, updatePost, deletePost, getById, getAll, searchPost }
