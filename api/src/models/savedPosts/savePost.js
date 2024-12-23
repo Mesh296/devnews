@@ -3,9 +3,10 @@ const { DataTypes } = require('sequelize')
 
 module.exports = (sequelize) => {
     const savedPost = sequelize.define('savePost', {
-        dateSave: {
-            type: DataTypes.DATE,
-            defaultValue: DataTypes.NOW
+        id: {
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
+            primaryKey: true,
         },
     })
     return savedPost;

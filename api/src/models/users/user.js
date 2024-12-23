@@ -1,9 +1,14 @@
 const { sequelize } = require('../../providers/db.js')
-const { DataTypes } = require('sequelize')
+const { DataTypes, UUID } = require('sequelize')
 const bcrypt = require('bcrypt')
 
 module.exports = (sequelize) => {
     const User = sequelize.define("user", {
+        id: {
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
+            primaryKey: true,
+        },
         fullName:{
             type: DataTypes.STRING,
             allowNull: false

@@ -3,14 +3,15 @@ const { DataTypes } = require('sequelize')
 
 module.exports = (sequelize) => {
     const Comment = sequelize.define("comment", {
+        id: {
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
+            primaryKey: true,
+        },
         body: {
             type: DataTypes.STRING,
             allowNull: false
-        },
-        commentDate: {
-            type: DataTypes.DATE,
-            defaultValue: DataTypes.NOW
-        },
+        }
     })
     return Comment;
 }

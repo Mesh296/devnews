@@ -3,17 +3,17 @@ const { DataTypes } = require('sequelize')
 
 module.exports = (sequelize) => {
     const Post = sequelize.define("post", {
+        id: {
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
+            primaryKey: true,
+        },
         title: {
             type: DataTypes.STRING,
             allowNull: false
         },
         description: {
             type: DataTypes.STRING
-        },
-        postDate: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            defaultValue: DataTypes.NOW
         },
         originalUrl: {
             type: DataTypes.STRING,
