@@ -8,6 +8,7 @@ export const Navbar = () => {
         setIsMenuOpen(!isMenuOpen);
     };
 
+
     return (
         <nav className="bg-surface border-gray-200 dark:bg-gray-900 drop-shadow-sm">
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -41,8 +42,7 @@ export const Navbar = () => {
                     </svg>
                 </button>
                 <div
-                    className={`${isMenuOpen ? "block" : "hidden"
-                        } w-full md:block md:w-auto`}
+                    className={`${isMenuOpen ? "block" : "hidden"} w-full md:block md:w-auto`}
                     id="navbar-default"
                 >
                     <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0">
@@ -50,6 +50,7 @@ export const Navbar = () => {
                             <Link
                                 to="/"
                                 className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-element-secondary md:p-0 transition-all duration-200 border-transparent md:border-b-[3px] md:hover:border-element-secondary md:rounded-none md:pb-1"
+                                onClick={toggleMenu}
                             >
                                 Home
                             </Link>
@@ -59,6 +60,7 @@ export const Navbar = () => {
                             <Link
                                 to="/About"
                                 className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-element-secondary md:p-0 transition-all duration-200 border-transparent md:border-b-[3px] md:hover:border-element-secondary md:rounded-none md:pb-1"
+                                onClick={toggleMenu}
                             >
                                 About
                             </Link>
@@ -67,6 +69,7 @@ export const Navbar = () => {
                             <Link
                                 to="/login"
                                 className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-element-secondary md:p-0 transition-all duration-200 border-transparent md:border-b-[3px] md:hover:border-element-secondary md:rounded-none md:pb-1"
+                                onClick={toggleMenu}
                             >
                                 Login
                             </Link>
@@ -75,6 +78,7 @@ export const Navbar = () => {
                             <Link
                                 to="register"
                                 className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-element-secondary md:p-0 transition-all duration-200 border-transparent md:border-b-[3px] md:hover:border-element-secondary md:rounded-none md:pb-1"
+                                onClick={toggleMenu}
                             >
                                 Register
                             </Link>

@@ -36,8 +36,7 @@ export default {
         // color that rarely change
 
         "element-primary": "#0A0A0A",
-        // background color
-
+  
         "element-secondary": "#575757",
 
         "dark-element-primary": "#FAFAFA",
