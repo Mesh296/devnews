@@ -12,7 +12,6 @@ export const Navbar = () => {
     const { user, logoutUser } = useAuth();
 
 
-
     return (
         <nav className=" backdrop-blur-sm bg-opacity-70 bg-surface border-gray-200 dark:bg-gray-900 drop-shadow-sm sticky top-0">
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
