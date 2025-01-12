@@ -11,6 +11,8 @@ export const login = async (username, password) => {
   const response = await axios.post(`${API_URL}/users/login`, { username, password });
   const { token, refreshToken } = response.data;
 
+  console.log(response.data)
+
   // Save tokens in localStorage
   localStorage.setItem('token', token);
   localStorage.setItem('refreshToken', refreshToken);
@@ -25,9 +27,10 @@ export const logout = () => {
 
 export const getUserData = async () => {
   const token = localStorage.getItem('token');
-  if (!token) throw new Error('No token found');
+
   const response = await axios.get(`${API_URL}/users/me`, {
     headers: { Authorization: `Bearer ${token}` },
   });
+
   return response.data;
 };

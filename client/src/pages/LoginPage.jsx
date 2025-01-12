@@ -42,7 +42,7 @@ export const LoginPage = () => {
           <div className="w-full tablet:max-w-md bg-on-surface-1 rounded-lg shadow border border-stroke-bold">
             <div className="p-6 space-y-4 laptop:space-y-6">
               <h1 className="font-bold text-lg laptop:text-xl">
-                Sign in to your account
+                Login to your account
               </h1>
               {error && (
                 <p className="text-red-500 text-sm">
@@ -71,7 +71,7 @@ export const LoginPage = () => {
                   onChange={handleInput}
                 />
                 <PrimaryButton
-                  text="Sign in"
+                  text="Login"
                   className="w-full text-md font-semibold"
                   onClick={handleSubmit}
                 />
