@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthProvider";
 
 export const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -8,11 +9,14 @@ export const Navbar = () => {
         setIsMenuOpen(!isMenuOpen);
     };
 
+    const { user, logoutUser } = useAuth();
+
+
 
     return (
         <nav className="bg-surface border-gray-200 dark:bg-gray-900 drop-shadow-sm">
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-                <Link href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
+                <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
                     <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
                         DEVNEWS
                     </span>
@@ -65,24 +69,41 @@ export const Navbar = () => {
                                 About
                             </Link>
                         </li>
-                        <li>
-                            <Link
-                                to="/login"
-                                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-element-secondary md:p-0 transition-all duration-200 border-transparent md:border-b-[3px] md:hover:border-element-secondary md:rounded-none md:pb-1"
-                                onClick={toggleMenu}
-                            >
-                                Login
-                            </Link>
-                        </li>
-                        <li>
-                            <Link
-                                to="register"
-                                className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-element-secondary md:p-0 transition-all duration-200 border-transparent md:border-b-[3px] md:hover:border-element-secondary md:rounded-none md:pb-1"
-                                onClick={toggleMenu}
-                            >
-                                Register
-                            </Link>
-                        </li>
+                        {!user && (
+                            <li>
+                                <Link
+                                    to="/login"
+                                    className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-element-secondary md:p-0 transition-all duration-200 border-transparent md:border-b-[3px] md:hover:border-element-secondary md:rounded-none md:pb-1"
+                                    onClick={toggleMenu}
+                                >
+                                    Login
+                                </Link>
+                            </li>
+                        )}
+                        {!user && (
+                            <li>
+                                <Link
+                                    to="/register"
+                                    className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-element-secondary md:p-0 transition-all duration-200 border-transparent md:border-b-[3px] md:hover:border-element-secondary md:rounded-none md:pb-1"
+                                    onClick={toggleMenu}
+                                >
+                                    Register
+                                </Link>
+                            </li>
+                        )}
+                        {user && (
+                            <li>
+                                <Link
+                                    to="/login"
+                                    className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-element-secondary md:p-0 transition-all duration-200 border-transparent md:border-b-[3px] md:hover:border-element-secondary md:rounded-none md:pb-1"
+                                    onClick={logoutUser}
+                                >
+                                    Logout
+                                </Link>
+
+                            </li>
+                        )}
+
                     </ul>
                 </div>
             </div>
