@@ -1,34 +1,55 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { InputField } from '../components/InputField'
 import { PrimaryButton } from '../components/PrimaryButton'
 import { Flowbite, Datepicker, Select } from "flowbite-react";
 import { Label } from "flowbite-react";
+import { register } from '../services/authService';
 
 export const RegisterPage = () => {
+  const navigate = useNavigate();
 
-  const [formValues, setFormValues] = useState({
+  const [credentials, setCredentials] = useState({
     email: '',
     username: '',
     fullName: '',
-    birthday: null,
+    dateOfBirth: null,
     gender: 'Male',
     password: '',
     confirmPassword: '',
   });
 
+  const [isRegistered, setIsRegistered] = useState(false)
+
   const handleInput = (e) => {
     const { name, value } = e.target;
-    setFormValues((prevValues) => ({
+    setCredentials((prevValues) => ({
       ...prevValues,
       [name]: value,
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formValues);
+
+    if (credentials.password !== credentials.confirmPassword) {
+      alert("Passwords do not match! Please try again.");
+      return; 
+    }
+
+    try {
+      const userData = await register(credentials)
+      console.log(userData);
+      alert("Your account has been registered successfully!");
+      navigate('/login')
+    } catch (error) {
+      console.log(error);
+    }
   };
+  
+  const handleNavigate = () => {
+    navigate('/login')
+  }
 
   return (
     <div>
@@ -41,6 +62,7 @@ export const RegisterPage = () => {
                 <h1 className='font-bold text-lg laptop:text-xl'>
                   Create your account
                 </h1>
+                <div className='text-red-500'>{isRegistered ? `Registered successfully` : ''}</div>
                 <form action="" className='space-y-4 laptop:space-y-6'>
                   {/* Email Field */}
                   <InputField
@@ -82,15 +104,15 @@ export const RegisterPage = () => {
                         Your birthday
                       </label>
                       <Datepicker
-                        selected={formValues.birthday}
+                        selected={credentials.dateOfBirth}
                         onChange={(date) => {
                           if (date) {
-                            const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000)
+                            const formattedDate  = new Date(date.getTime() - date.getTimezoneOffset() * 60000)
                               .toISOString()
                               .split("T")[0];
-                            setFormValues((prevValues) => ({
+                            setCredentials((prevValues) => ({
                               ...prevValues,
-                              birthday: localDate,
+                              dateOfBirth: formattedDate,
                             }));
                           }
                         }}
@@ -105,7 +127,7 @@ export const RegisterPage = () => {
                         colors=" failure"
                         id="gender"
                         name="gender"
-                        value={formValues.gender}
+                        value={credentials.gender}
                         onChange={handleInput}
                         required
                       >
@@ -136,10 +158,12 @@ export const RegisterPage = () => {
                     onChange={handleInput}
                   />
                   <PrimaryButton onClick={handleSubmit} text="Sign in" className="w-full text-md font-semibold" />
+                  
                   <p className='text-element-secondary'>
                     Already have an account? <Link to='/login' className='text-element-primary font-semibold hover:text-element-secondary transition-all duration-150'>Sign in</Link>
                   </p>
                 </form>
+                <PrimaryButton onClick={handleNavigate} text="test" className="w-full text-md font-semibold" />
               </div>
           </div>
         </div>
