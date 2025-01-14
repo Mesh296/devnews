@@ -47,9 +47,7 @@ export const RegisterPage = () => {
     }
   };
   
-  const handleNavigate = () => {
-    navigate('/login')
-  }
+
 
   return (
     <div>
@@ -163,7 +161,6 @@ export const RegisterPage = () => {
                     Already have an account? <Link to='/login' className='text-element-primary font-semibold hover:text-element-secondary transition-all duration-150'>Sign in</Link>
                   </p>
                 </form>
-                <PrimaryButton onClick={handleNavigate} text="test" className="w-full text-md font-semibold" />
               </div>
           </div>
         </div>
