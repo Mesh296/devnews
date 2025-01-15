@@ -25,10 +25,10 @@ export const Sidebar = () => {
     }, []);
 
     return (
-        <div>
+        <div className=''>
             <button
                 type='button'
-                className="z-100 inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+                className="z-100 inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg laptop:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
                 onClick={toggleSidebar}
                 aria-expanded={isOpen}
             >
@@ -37,8 +37,8 @@ export const Sidebar = () => {
                     <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
                 </svg>
             </button>
-            <aside id="separator-sidebar" className={`${isOpen ? "block" : "hidden" } sm:block fixed left-0 z-40 w-64 h-screen transition-transform  sm:translate-x-0 top-0 sm:top-auto`}
-            aria-label="Sidebar "
+            <aside id="separator-sidebar" className={`${isOpen ? "block" : "hidden" } laptop:block fixed left-0 z-40 w-64 h-screen laptop:translate-x-0 top-0 laptop:top-auto `}
+            aria-label="Sidebar"
             ref={sidebarRef}
             >
                 <div className="h-full px-3 py-4 overflow-y-auto border border-t-0 bg-on-surface-1">

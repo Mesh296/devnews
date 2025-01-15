@@ -45,6 +45,8 @@ export default {
 
       },
       screens: {
+        'big-smartphone': '481px',
+
         'tablet': '640px',
         // => @media (min-width: 640px) { ... }
 
