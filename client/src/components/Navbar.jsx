@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
 
@@ -11,7 +11,7 @@ export const Navbar = () => {
 
     const { user, logoutUser } = useAuth();
 
-
+    const username = user ? user.username : null;
 
     return (
         <nav className=" backdrop-blur-sm bg-opacity-70 bg-surface border-gray-200 drop-shadow-sm sticky top-0">
@@ -94,11 +94,11 @@ export const Navbar = () => {
                         {user && (
                             <li>
                                 <Link
-                                    to="/login"
+                                    to={`/${username}`}
                                     className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-element-secondary md:p-0 transition-all duration-200 border-transparent md:border-b-[3px] md:hover:border-element-secondary md:rounded-none md:pb-1"
-                                    onClick={logoutUser}
+                                    
                                 >
-                                    Logout
+                                    Profile
                                 </Link>
 
                             </li>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000'; // Update with your backend URL
+const API_URL = 'http://localhost:3000/api'; // Update with your backend URL
 
 export const register = async (userData) => {
   const response = await axios.post(`${API_URL}/users/register`, userData);
@@ -11,13 +11,12 @@ export const login = async (username, password) => {
   const response = await axios.post(`${API_URL}/users/login`, { username, password });
   const { token, refreshToken } = response.data;
 
-  console.log(response.data)
-
   // Save tokens in localStorage
   localStorage.setItem('token', token);
   localStorage.setItem('refreshToken', refreshToken);
 
-  return response.data;
+
+  return { token, refreshToken };
 };
 
 export const logout = () => {
