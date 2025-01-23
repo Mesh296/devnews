@@ -8,11 +8,13 @@ import { LoginPage } from './pages/LoginPage'
 import { RegisterPage } from './pages/RegisterPage'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { ProfilePage } from './pages/ProfilePage'
+import { AuthProvider } from './context/AuthProvider'
 
 function App() {
   return (
     <>
       <Router>
+        <AuthProvider>
         <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -28,6 +30,7 @@ function App() {
               }
           />
         </Routes>
+        </AuthProvider>
       </Router>
     </>
   )

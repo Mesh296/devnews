@@ -4,6 +4,7 @@ import { InputField } from '../components/InputField';
 import { PrimaryButton } from '../components/PrimaryButton';
 import { login } from '../services/authService';
 import { useAuth } from '../context/AuthProvider';
+import { getUserData } from '../services/authService';
 
 export const LoginPage = () => {
   const [credentials, setCredentials] = useState({ username: '', password: '' });
@@ -21,14 +22,21 @@ export const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(credentials)
     try {
-      const userData = await login(credentials.username, credentials.password);
+      // Step 1: Log in and get the token
+      const { token } = await login(credentials.username, credentials.password);
+  
+      // Step 2: Fetch the full user data using the token
+      const userData = await getUserData();
+  
+      // Step 3: Update the user state in AuthProvider with the full user object
       loginUser(userData);
+  
+      // Step 4: Navigate to the home page
       navigate('/');
     } catch (err) {
-      console.log(err)
-      setError("error");
+      console.log(err);
+      setError('error');
     }
   };
 

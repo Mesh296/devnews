@@ -49,6 +49,18 @@ Vote.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 
 RefreshToken.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 
+Category.belongsToMany(Post, {
+    through: PostCategory,
+    foreignKey: 'categoryId',
+    as: 'posts',
+});
+
+Post.belongsToMany(Category, {
+    through: PostCategory,
+    foreignKey: 'postId',
+    as: 'categories',
+});
+
 
 // Export models
 module.exports = { 

@@ -19,11 +19,13 @@ export const AuthProvider = ({ children }) => {
                 setLoading(false);
             }
         };
-
         fetchUser();
     }, [])
 
-    const loginUser = (userData) => setUser(userData);
+    const loginUser = (userData) => {
+        setUser(userData); // Ensure it gets `user` directly.
+    };
+
     const logoutUser = () => {
         logout();
         setUser(null);
