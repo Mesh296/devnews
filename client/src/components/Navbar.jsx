@@ -11,7 +11,9 @@ export const Navbar = () => {
 
     const { user, logoutUser } = useAuth();
 
+
     const username = user ? user.username : null;
+
 
     return (
         <nav className=" backdrop-blur-sm bg-opacity-70 bg-surface border-gray-200 drop-shadow-sm sticky top-0">

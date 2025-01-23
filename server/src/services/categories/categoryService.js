@@ -10,6 +10,18 @@ const getAll = async() => {
     }
 }
 
+const getById = async(categoryId) => {
+    try {
+        const category = await Category.findByPk(categoryId)
+        if (!category) {
+            throw new Error('Category not found')
+        }
+        return category
+    } catch (error) {
+        throw new Error(error.message)
+    }
+}
+
 const createCategory = async(data) => {
     try {
         const existingCategory = await Category.findOne({
@@ -39,4 +51,4 @@ const deleteCategory = async(categoryId) => {
     }
 }
 
-module.exports = { getAll, createCategory, deleteCategory }
+module.exports = { getAll, getById, createCategory, deleteCategory }

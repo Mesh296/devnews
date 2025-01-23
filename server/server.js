@@ -14,7 +14,7 @@ dotenv.config()
 const PORT = process.env.PORT
 
 //route---------------------------------------------------
-app.use('/', routes);
+app.use('/api', routes);
 app.get('/', (req, res) => {
     res.json('This is home page');
 })
