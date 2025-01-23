@@ -17,7 +17,8 @@ router.get('/post/:id', async(req, res) => {
 router.get('/search', async(req, res) => {
     try {
         const q = req.query.q
-        const posts = await postService.searchPost(q || 'golang')
+        console.log(q)
+        const posts = await postService.searchPost(q)
         return res.status(201).json(posts)
     } catch (error) {
         return res.status(400).json({message: error.message})
