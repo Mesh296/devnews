@@ -3,6 +3,7 @@ const postService = require('../../services/posts/postService.js')
 const authentication = require('../../middlewares/authentication.js')
 const router = express.Router();
 
+
 router.get('/post/:id', async(req, res) => {
     try {
         const postId = req.params.id;
@@ -36,6 +37,11 @@ router.post('/create', authentication, async(req, res) => {
     try {
         const data = req.body
         data.userId = req.user.id;
+
+        if (!data.categories || !Array.isArray(data.categories)) {
+            return res.status(400).json({ message: 'Categories must be an array' });
+        }
+
         const post = await postService.createPost(data)
         return res.status(201).json(post)
     } catch (error) {
