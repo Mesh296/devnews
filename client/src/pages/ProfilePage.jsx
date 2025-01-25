@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getUserInfo } from '../services/userService';
+import { getUserInfo } from '../services/users/userService';
+import { useAuth } from '../context/AuthProvider';
+import { Button } from 'flowbite-react';
 
 export const ProfilePage = () => {
   const { username } = useParams(); // Extract username from URL
   const [userInfo, setUserInfo] = useState(null); // State to store user info
   const [loading, setLoading] = useState(true); // State to manage loading state
   const [error, setError] = useState(''); // State to handle errors
+
+  const { user, logoutUser } = useAuth();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -61,6 +65,7 @@ export const ProfilePage = () => {
       ) : (
         <p className="text-gray-500">No user information available.</p>
       )}
+      <Button color="red" onClick={logoutUser}>Logout</Button>
     </div>
   );
 };

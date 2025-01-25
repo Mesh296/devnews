@@ -4,7 +4,7 @@ import { InputField } from '../components/InputField'
 import { PrimaryButton } from '../components/PrimaryButton'
 import { Flowbite, Datepicker, Select } from "flowbite-react";
 import { Label } from "flowbite-react";
-import { register } from '../services/authService';
+import { register } from '../services/users/authService';
 
 export const RegisterPage = () => {
   const navigate = useNavigate();
