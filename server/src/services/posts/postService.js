@@ -39,7 +39,7 @@ const createPost = async (data) => {
         return fullPost;
 
     } catch (error) {
-
+        await transaction.rollback();
         throw new Error(error.message);
     }
 }
@@ -47,14 +47,22 @@ const createPost = async (data) => {
 const searchPost = async (data) => {
     try {
         const formattedQuery = data.replace(/\s+/g, '&');
+        
         const posts = await Post.findAll({
             where: {
                 [Op.or]: [
                     { title: { [Op.match]: Sequelize.fn('to_tsquery', formattedQuery) } },
                     { description: { [Op.match]: Sequelize.fn('to_tsquery', formattedQuery) } },
                 ]
-            }
-        })
+            },
+            include: [{
+                model: Category,
+                through: { attributes: [] }, // Ẩn thông tin bảng trung gian
+                as: 'categories',
+                attributes: ['id', 'name'] // Chỉ lấy id và name của category
+            }]
+        }, 
+    )
         return posts;
     } catch (error) {
         throw new Error(error.message);
