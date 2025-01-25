@@ -17,11 +17,13 @@ export default {
         // stroke bold + on-surface-1
         // Element Primary: color for Heading, Title, selected and active elements
         // Element Secondary: color for content's text
-        surface: "#F7F7F7",
+        surface: "#FFFBF5",
         // main background color
 
-        "on-surface-1": "#FFFFFF",
+        "on-surface-1": "#F5EFE6",
         // background color for sections, blocks, cards
+
+        "on-surface-1-hover": "#F1E7D7",
 
         "stroke-bold": "#D1D1D1",
         // border for section on surface 1
@@ -35,9 +37,9 @@ export default {
         "brand-color": "#151515",
         // color that rarely change
 
-        "element-primary": "#0A0A0A",
+        "element-primary": "#1A1A1A",
   
-        "element-secondary": "#575757",
+        "element-secondary": "#686868",
 
         "dark-element-primary": "#FAFAFA",
 
