@@ -40,9 +40,10 @@ export const HomePage = () => {
   }, [])
   console.log(posts)
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4">
-      {/* <Sidebar /> */}
-      <div className="w-full max-w-3xl">
+    <div>
+
+    <div className="min-h-screen flex flex-col items-center justify-center">
+      <div className="w-full p-4 max-w-3xl">
         {posts.map((post, index) => (
           <Card
             key={index}
@@ -84,6 +85,7 @@ export const HomePage = () => {
           </Modal.Footer>
         </Modal>
       )}
+    </div>
     </div>
   );
 };

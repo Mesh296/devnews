@@ -9,6 +9,8 @@ import { RegisterPage } from './pages/RegisterPage'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { ProfilePage } from './pages/ProfilePage'
 import { AuthProvider } from './context/AuthProvider'
+import { CreatePostPage } from './pages/CreatePostPage'
+import { Sidebar } from './components/Sidebar'
 
 function App() {
   return (
@@ -16,6 +18,7 @@ function App() {
       <Router>
         <AuthProvider>
         <Navbar />
+        <Sidebar />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
@@ -26,6 +29,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <ProfilePage />
+              </ProtectedRoute>
+              }
+          />
+                    <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <CreatePostPage />
               </ProtectedRoute>
               }
           />
