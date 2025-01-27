@@ -28,7 +28,7 @@ export default {
         "stroke-bold": "#D1D1D1",
         // border for section on surface 1
 
-        "on-surface-2": "#E5E5E5",
+        "on-surface-2": "#F1DEC3",
         // highlight small elements darker than on-surface-1
 
         "stroke-light": "#C7C7C7",
