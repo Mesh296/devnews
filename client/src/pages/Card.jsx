@@ -34,6 +34,7 @@ export const Card = ({ title, content, author, categories, createdAt, updatedAt,
             <a className="block p-6 bg-on-surface-1 transition-all duration-200 rounded-lg mt-2 hover:bg-on-surface-1-hover">
                 <h5 className="mb-2 text-xl font-semibold tracking-tight text-element-primary ">{title}</h5>
                 <p className="font-normal text-element-primary ">{content}</p>
+
                 <div className="flex justify-between items-center mt-8 text-sm text-element-primary">
                     <p>
                         {
@@ -49,12 +50,10 @@ export const Card = ({ title, content, author, categories, createdAt, updatedAt,
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5 text-element-secondary">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
                         </svg>
-
                     </div>
-
                 </div>
             </a>
-            <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
+            <hr className="h-px my-8 bg-gray-200 border-0" />
         </div>
     );
 };

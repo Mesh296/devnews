@@ -38,7 +38,7 @@ export const HomePage = () => {
 
     fetchPosts();
   }, [])
-  console.log(posts)
+
   return (
     <div>
 
