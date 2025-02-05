@@ -1,6 +1,7 @@
-const { Post, sequelize, PostCategory, Category } = require('../../models');
+const { Post, sequelize, PostCategory, Category, User, Vote, Comment } = require('../../models');
 const { Op, Sequelize } = require("sequelize");
 const postCategoryService = require('../postsCategories/postCategoryService.js')
+const voteService = require('../votes/voteService.js')
 
 const createPost = async (data) => {
     const transaction = await sequelize.transaction();
@@ -8,9 +9,9 @@ const createPost = async (data) => {
     try {
         const post = await Post.create(data, { transaction });
 
-        const existingCategories = await data.categories.map(categoryId => ( 
-             Category.findAll({
-                where: { id: categoryId},
+        const existingCategories = await data.categories.map(categoryId => (
+            Category.findAll({
+                where: { id: categoryId },
                 transaction
             })
         ))
@@ -47,7 +48,7 @@ const createPost = async (data) => {
 const searchPost = async (data) => {
     try {
         const formattedQuery = data.replace(/\s+/g, '&');
-        
+
         const posts = await Post.findAll({
             where: {
                 [Op.or]: [
@@ -55,15 +56,38 @@ const searchPost = async (data) => {
                     { description: { [Op.match]: Sequelize.fn('to_tsquery', formattedQuery) } },
                 ]
             },
-            include: [{
-                model: Category,
-                through: { attributes: [] }, // Ẩn thông tin bảng trung gian
-                as: 'categories',
-                attributes: ['id', 'name'] // Chỉ lấy id và name của category
-            }]
-        }, 
-    )
-        return posts;
+            include: [
+                {
+                    model: Category,
+                    through: { attributes: [] }, // Ẩn thông tin bảng trung gian
+                    as: 'categories', // Chỉ định alias đã định nghĩa
+                    attributes: ['id', 'name'], // Chỉ lấy id và name của category
+                },
+                {
+                    model: User,
+                    as: 'author',
+                    attributes: ['username'],
+                },
+                {
+                    model: Comment,
+                    as: 'comments',
+                    attributes: ['body', 'createdAt']
+                },
+
+            ],
+        });
+
+        const fullPost = await Promise.all(
+            posts.map(async (post) => {
+                const voteSummary = await voteService.countVoteOfPost(post.id)
+                return {
+                    ...post.toJSON(),
+                    voteSummary,
+                }
+            })
+        )
+
+        return fullPost;
     } catch (error) {
         throw new Error(error.message);
     }
@@ -72,17 +96,37 @@ const searchPost = async (data) => {
 const getById = async (postId) => {
     try {
         const post = await Post.findByPk(postId, {
-            include: [{
-                model: Category,
-                through: { attributes: [] }, // Ẩn thông tin bảng trung gian
-                as: 'categories', // Chỉ định alias đã định nghĩa
-                attributes: ['id', 'name'], // Chỉ lấy id và name của category
-            }],
-        })
-        if (!post) {
-            throw new Error('Post not found')
+            include: [
+                {
+                    model: Category,
+                    through: { attributes: [] }, // Ẩn thông tin bảng trung gian
+                    as: 'categories', // Chỉ định alias đã định nghĩa
+                    attributes: ['id', 'name'], // Chỉ lấy id và name của category
+                },
+                {
+                    model: User,
+                    as: 'author',
+                    attributes: ['username'],
+                },
+                {
+                    model: Comment,
+                    as: 'comments',
+                    attributes: ['body', 'createdAt']
+                },
+
+            ],
+        });
+
+        if(!post) {
+            throw new Error("Can not find post")
         }
-        return post
+
+        const voteSummary = await voteService.countVoteOfPost(postId)
+        return {
+            ...post.toJSON(),
+            voteSummary,
+        }
+
     } catch (error) {
         throw new Error(error.message);
     }
@@ -93,9 +137,39 @@ const getByUser = async (userId) => {
         const posts = await Post.findAll({
             where: {
                 userId: userId
-            }
+            },
+            include: [
+                {
+                    model: Category,
+                    through: { attributes: [] }, // Ẩn thông tin bảng trung gian
+                    as: 'categories', // Chỉ định alias đã định nghĩa
+                    attributes: ['id', 'name'], // Chỉ lấy id và name của category
+                },
+                {
+                    model: User,
+                    as: 'author',
+                    attributes: ['username'],
+                },
+                {
+                    model: Comment,
+                    as: 'comments',
+                    attributes: ['body', 'createdAt']
+                },
+
+            ],
+            
         })
-        return posts
+        const fullPost = await Promise.all(
+            posts.map(async (post) => {
+                const voteSummary = await voteService.countVoteOfPost(post.id)
+                return {
+                    ...post.toJSON(),
+                    voteSummary,
+                }
+            })
+        )
+
+        return fullPost;
     } catch (error) {
         throw new Error(error.message);
     }
@@ -104,15 +178,38 @@ const getByUser = async (userId) => {
 const getAll = async () => {
     try {
         const posts = await Post.findAll({
-            include: [{
-                model: Category,
-                through: { attributes: [] }, // Ẩn thông tin bảng trung gian
-                as: 'categories', // Chỉ định alias đã định nghĩa
-                attributes: ['id', 'name'], // Chỉ lấy id và name của category
-            }],
+            include: [
+                {
+                    model: Category,
+                    through: { attributes: [] }, // Ẩn thông tin bảng trung gian
+                    as: 'categories', // Chỉ định alias đã định nghĩa
+                    attributes: ['id', 'name'], // Chỉ lấy id và name của category
+                },
+                {
+                    model: User,
+                    as: 'author',
+                    attributes: ['username'],
+                },
+                {
+                    model: Comment,
+                    as: 'comments',
+                    attributes: ['body', 'createdAt']
+                },
+
+            ],
         });
 
-        return posts;
+        const fullPost = await Promise.all(
+            posts.map(async (post) => {
+                const voteSummary = await voteService.countVoteOfPost(post.id)
+                return {
+                    ...post.toJSON(),
+                    voteSummary,
+                }
+            })
+        )
+
+        return fullPost;
 
     } catch (error) {
         throw new Error(error.message)
