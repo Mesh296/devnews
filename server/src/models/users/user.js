@@ -56,6 +56,12 @@ module.exports = (sequelize) => {
                 this.setDataValue('password', hash);
             },
         }
+    },  {
+        indexes: [
+            {
+                fields: ['username']
+            }
+        ]
     });
     return User;
 }
