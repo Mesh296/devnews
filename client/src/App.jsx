@@ -9,27 +9,38 @@ import { RegisterPage } from './pages/RegisterPage'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { ProfilePage } from './pages/ProfilePage'
 import { AuthProvider } from './context/AuthProvider'
+import { CreatePostPage } from './pages/CreatePostPage'
+import { Sidebar } from './components/Sidebar'
 
 function App() {
   return (
     <>
       <Router>
         <AuthProvider>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route
-            path="/:username"
-            element={
-              <ProtectedRoute>
-                <ProfilePage />
-              </ProtectedRoute>
+          <Navbar />
+          <Sidebar />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route
+              path="/:username"
+              element={
+                <ProtectedRoute>
+                  <ProfilePage />
+                </ProtectedRoute>
               }
-          />
-        </Routes>
+            />
+            <Route
+              path="/"
+              element={
+                <ProtectedRoute>
+                  <CreatePostPage />
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
         </AuthProvider>
       </Router>
     </>

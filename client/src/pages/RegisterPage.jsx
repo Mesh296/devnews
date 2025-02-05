@@ -4,7 +4,7 @@ import { InputField } from '../components/InputField'
 import { PrimaryButton } from '../components/PrimaryButton'
 import { Flowbite, Datepicker, Select } from "flowbite-react";
 import { Label } from "flowbite-react";
-import { register } from '../services/authService';
+import { register } from '../services/users/authService';
 
 export const RegisterPage = () => {
   const navigate = useNavigate();
@@ -51,7 +51,7 @@ export const RegisterPage = () => {
 
   return (
     <div>
-      <section className="bg-gray-50 dark:bg-gray-900">
+      <section className="bg-surface dark:bg-gray-900">
         <div className='flex flex-col items-center p-4'>
           <Link to="/" className='font-semibold text-2xl mb-6'>DevNews</Link>
           <div className='w-full tablet:max-w-md bg-on-surface-1 rounded-lg shadow border border-stroke-bold'>
