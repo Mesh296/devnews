@@ -34,6 +34,16 @@ router.get('/all', async(req, res) => {
     }
 })
 
+router.get('/user/:userId', async(req, res) => {
+    try {
+        const userId = req.params.userId
+        const posts = await postService.getByUser(userId);
+        return res.status(201).json(posts);
+    } catch (error) {
+        return res.status(400).json({message: error.message})
+    }
+})
+
 router.post('/create', authentication, async(req, res) => {
     try {
         const data = req.body
