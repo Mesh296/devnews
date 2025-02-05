@@ -54,8 +54,13 @@ module.exports = (sequelize) => {
                 const hash = bcrypt.hashSync(value, 10);
                 this.setDataValue('password', hash);
             },
-            
         }
+    },  {
+        indexes: [
+            {
+                fields: ['username']
+            }
+        ]
     });
     return User;
 }
