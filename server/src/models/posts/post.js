@@ -25,6 +25,12 @@ module.exports = (sequelize) => {
                 }
             }
         }
+    },{
+        indexes: [
+            {
+                fields: ['title']  // Index on the 'title' column
+            }
+        ]
     });
 
     return Post;
