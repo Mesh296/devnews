@@ -37,7 +37,7 @@ export const Card = ({ title, content, author, categories, createdAt, updatedAt,
                 <div className="flex justify-between items-center mt-8 text-sm text-element-primary">
                     <p>
                         {
-                            categories.map((category, index) => {
+                            categories?.map((category, index) => {
                                 return (<span key={index} className='bg-on-surface-2 mr-2 px-2 py-1 text-sm rounded-full'>
                                     {category.name}
                                 </span>)

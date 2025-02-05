@@ -137,9 +137,39 @@ const getByUser = async (userId) => {
         const posts = await Post.findAll({
             where: {
                 userId: userId
-            }
+            },
+            include: [
+                {
+                    model: Category,
+                    through: { attributes: [] }, // Ẩn thông tin bảng trung gian
+                    as: 'categories', // Chỉ định alias đã định nghĩa
+                    attributes: ['id', 'name'], // Chỉ lấy id và name của category
+                },
+                {
+                    model: User,
+                    as: 'author',
+                    attributes: ['username'],
+                },
+                {
+                    model: Comment,
+                    as: 'comments',
+                    attributes: ['body', 'createdAt']
+                },
+
+            ],
+            
         })
-        return posts
+        const fullPost = await Promise.all(
+            posts.map(async (post) => {
+                const voteSummary = await voteService.countVoteOfPost(post.id)
+                return {
+                    ...post.toJSON(),
+                    voteSummary,
+                }
+            })
+        )
+
+        return fullPost;
     } catch (error) {
         throw new Error(error.message);
     }

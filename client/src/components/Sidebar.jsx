@@ -28,7 +28,7 @@ export const Sidebar = () => {
 
                         {/* Add Icon */}
                         <li className='laptop:py-2'>
-                            <Link to="#" className="flex items-center justify-center">
+                            <Link to="/createPost" className="flex items-center justify-center">
                                 <div className="p-2 laptop:p-3 hover:bg-on-surface-1-hover transition-all duration-200 rounded-xl group">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="size-8 text-gray-400 group-hover:text-element-primary">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
