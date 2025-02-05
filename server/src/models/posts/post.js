@@ -7,6 +7,7 @@ module.exports = (sequelize) => {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true,
+            index: true,
         },
         title: {
             type: DataTypes.STRING,
@@ -25,8 +26,16 @@ module.exports = (sequelize) => {
                 }
             }
         }
+    }, {
+        indexes: [
+            {
+              name: 'idx_full_text_search',
+              fields: ['title', 'description'],
+              using: 'GIN',  // Use PostgreSQL's GIN index for full-text search
+            },
+          ]
     });
 
     return Post;
-}
+};
 

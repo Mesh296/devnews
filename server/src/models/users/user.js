@@ -8,6 +8,7 @@ module.exports = (sequelize) => {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true,
+            index: true,
         },
         fullName:{
             type: DataTypes.STRING,
@@ -54,7 +55,6 @@ module.exports = (sequelize) => {
                 const hash = bcrypt.hashSync(value, 10);
                 this.setDataValue('password', hash);
             },
-            
         }
     });
     return User;
