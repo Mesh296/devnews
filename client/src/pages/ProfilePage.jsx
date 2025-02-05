@@ -140,7 +140,6 @@ export const ProfilePage = () => {
                       </div>
                     </Modal.Body>
                     <Modal.Footer>
-                      <Button color='dark' onClick={() => setSelectedCard(null)}>Close</Button>
                     </Modal.Footer>
                   </Modal>
                 )}

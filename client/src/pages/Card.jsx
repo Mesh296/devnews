@@ -17,7 +17,6 @@ export const Card = ({ title, content, author, categories, createdAt, updatedAt,
         ];
 
         for (let interval of intervals) {
-            console.log(interval.seconds)
             const count = Math.floor(seconds / interval.seconds)
             if (count > 0) {
                 return `${count} ${interval.label}${count == 1 ? '' : 's'} ago`
@@ -45,6 +44,7 @@ export const Card = ({ title, content, author, categories, createdAt, updatedAt,
                             })
                         }
                     </p>
+
                     <div className='flex items-center gap-2'>
                         <p className='text-element-secondary text-xs'>Read more</p>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5 text-element-secondary">
