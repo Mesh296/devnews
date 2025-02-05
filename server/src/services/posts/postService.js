@@ -88,6 +88,19 @@ const getById = async (postId) => {
     }
 }
 
+const getByUser = async (userId) => {
+    try {
+        const posts = await Post.findAll({
+            where: {
+                userId: userId
+            }
+        })
+        return posts
+    } catch (error) {
+        throw new Error(error.message);
+    }
+}
+
 const getAll = async () => {
     try {
         const posts = await Post.findAll({
@@ -157,4 +170,4 @@ const deletePost = async (postId, userId) => {
     }
 }
 
-module.exports = { createPost, updatePost, deletePost, getById, getAll, searchPost }
+module.exports = { createPost, updatePost, deletePost, getById, getByUser, getAll, searchPost }
