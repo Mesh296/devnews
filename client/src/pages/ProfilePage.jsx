@@ -26,6 +26,10 @@ export const ProfilePage = () => {
     }
   };
 
+  const handleDeletePost = (deletedPostId) => {
+    setPosts(posts.filter(post => post.id !== deletedPostId));
+  };
+
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -94,7 +98,7 @@ export const ProfilePage = () => {
           </div>
           {/* image */}
           <div>
-            <img class="rounded-full w-36 h-36" src="docs/images/cat.jpg" alt="image description" />
+            <img className="rounded-full w-36 h-36" src="docs/images/cat.jpg" alt="image description" />
           </div>
         </div>
         <div className='flex justify-center mt-10 font-semibold text-element-primary'>
@@ -108,14 +112,17 @@ export const ProfilePage = () => {
             {posts.map((post, index) => (
               <Card
                 key={index}
+                postId={post.id}
                 title={post.title}
                 content={post.description}
-                author={userInfo.username}
+                author={userInfo}
                 categories={post.categories}
                 createdAt={post.createdAt}
                 updatedAt={post.updatedAt}
                 originalUrl={post.originalUrl}
                 onClick={() => setSelectedCard(post)} // Gửi dữ liệu Card tới Modal
+                currentUserId={userInfo.id}
+                onDelete={handleDeletePost}
               />
             ))}
           </div>

@@ -11,3 +11,14 @@ export const getPostsByUser = async(userId) => {
     const posts = await axios.get(`${API_URL}/posts/user/${userId}`)
     return posts.data
 }
+
+export const deletePost = async (postId) => {
+    const token = localStorage.getItem("token"); // Lấy token từ localStorage hoặc context
+    if (!token) throw new Error("No authentication token found");
+
+    return await axios.delete(`http://localhost:3000/api/posts/delete/${postId}`, {
+        headers: {
+            Authorization: `Bearer ${token}` // Gửi token lên server
+        }
+    });
+};

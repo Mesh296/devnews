@@ -188,7 +188,7 @@ const getAll = async () => {
                 {
                     model: User,
                     as: 'author',
-                    attributes: ['username'],
+                    attributes: ['username', 'id'],
                 },
                 {
                     model: Comment,
