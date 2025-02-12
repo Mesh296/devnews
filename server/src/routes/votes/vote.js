@@ -6,6 +6,7 @@ const voteService = require('../../services/votes/voteService.js')
 router.post('/vote', authentication, async(req, res) => {
     try {
         const data = req.body;
+        console.log(data.voteType)
         const userId = req.user.id;
         const vote = await voteService.createVote(userId, data.postId, data.voteType)
         return res.status(201).json(vote)
@@ -14,11 +15,22 @@ router.post('/vote', authentication, async(req, res) => {
     }
 })
 
-router.delete('/unvote/:id', authentication, async(req, res) => {
+router.get('/get-user-vote/:postId', authentication, async(req, res) => {
     try {
-        const voteId = req.params.id;
+        const postId = req.params.postId;
         const userId = req.user.id;
-        const unvote = await voteService.deleteVote(voteId, userId)
+        const result = await voteService.getUserVote(postId, userId)
+        return res.status(201).json(result)
+    } catch (error) {
+        return res.status(400).json({message: error.message})
+    }
+})
+
+router.delete('/unvote/:postId', authentication, async(req, res) => {
+    try {
+        const postId = req.params.postId;
+        const userId = req.user.id;
+        const unvote = await voteService.deleteVote(postId, userId)
         return res.status(201).json("Unvote succesfully!")
     } catch (error) {
         return res.status(400).json({message: error.message})

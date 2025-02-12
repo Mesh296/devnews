@@ -71,7 +71,12 @@ const searchPost = async (data) => {
                 {
                     model: Comment,
                     as: 'comments',
-                    attributes: ['body', 'createdAt']
+                    attributes: ['body', 'createdAt'],
+                    include: [{  // Include the user (author) for each comment
+                        model: User,
+                        as: 'author', // Assuming you have 'author' alias defined on Comment model too
+                        attributes: ['fullName'],
+                    }]
                 },
 
             ],
@@ -111,7 +116,12 @@ const getById = async (postId) => {
                 {
                     model: Comment,
                     as: 'comments',
-                    attributes: ['body', 'createdAt']
+                    attributes: ['body', 'createdAt'],
+                    include: [{  // Include the user (author) for each comment
+                        model: User,
+                        as: 'author', // Assuming you have 'author' alias defined on Comment model too
+                        attributes: ['fullName'],
+                    }]
                 },
 
             ],
@@ -153,7 +163,12 @@ const getByUser = async (userId) => {
                 {
                     model: Comment,
                     as: 'comments',
-                    attributes: ['body', 'createdAt']
+                    attributes: ['body', 'createdAt'],
+                    include: [{  // Include the user (author) for each comment
+                        model: User,
+                        as: 'author', // Assuming you have 'author' alias defined on Comment model too
+                        attributes: ['fullName'],
+                    }]
                 },
 
             ],
@@ -193,7 +208,12 @@ const getAll = async () => {
                 {
                     model: Comment,
                     as: 'comments',
-                    attributes: ['body', 'createdAt']
+                    attributes: ['body', 'userId', 'createdAt'],
+                    include: [{  // Include the user (author) for each comment
+                        model: User,
+                        as: 'author', // Assuming you have 'author' alias defined on Comment model too
+                        attributes: ['fullName'],
+                    }]
                 },
 
             ],

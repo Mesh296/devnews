@@ -6,25 +6,16 @@ import { PrimaryButton } from '../components/PrimaryButton';
 import { getAllPost, getPostsByUser } from '../services/posts/postService';
 import { Card } from './Card';
 import { Modal, Button } from 'flowbite-react';
+import { FaArrowUp, FaArrowDown, FaComment } from 'react-icons/fa';
 
 export const ProfilePage = () => {
   const { username } = useParams(); // Extract username from URL
   const [userInfo, setUserInfo] = useState(null); // State to store user info
   const [loading, setLoading] = useState(true); // State to manage loading state
   const [error, setError] = useState(''); // State to handle errors
-  const [selectedCard, setSelectedCard] = useState(null);
   const [posts, setPosts] = useState([]);
 
   const { user, logoutUser } = useAuth();
-
-  const modalRef = useRef(null);
-
-  const handleClickOutside = (event) => {
-    // Nếu click xảy ra ngoài Sidebar
-    if (modalRef.current && !modalRef.current.contains(event.target)) {
-      setSelectedCard(null); // Đóng Sidebar
-    }
-  };
 
   const handleDeletePost = (deletedPostId) => {
     setPosts(posts.filter(post => post.id !== deletedPostId));
@@ -62,15 +53,6 @@ export const ProfilePage = () => {
     }
   }, [userInfo]);
 
-  useEffect(() => {
-    // Thêm sự kiện lắng nghe khi component được render
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      // Hủy sự kiện khi component unmount
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
   // Render loading state
   if (loading) {
     return <p>Loading profile...</p>;
@@ -89,7 +71,7 @@ export const ProfilePage = () => {
   return (
     <div className="min-h-screen flex flex-col items-center mt-10">
       <div className='border rounded-xl border-b-0 min-h-screen p-6 w-full max-w-3xl'>
-        <div className='flex justify-between space-x-32'>
+        <div className='flex justify-between'>
           {/* info */}
           <div>
             <p className='font-semibold text-xl'>@{userInfo.username}</p>
@@ -98,7 +80,7 @@ export const ProfilePage = () => {
           </div>
           {/* image */}
           <div>
-            <img className="rounded-full w-36 h-36" src="docs/images/cat.jpg" alt="image description" />
+            <img className="rounded-full h-36" src="docs/images/cat.jpg" alt="image description" />
           </div>
         </div>
         <div className='flex justify-center mt-10 font-semibold text-element-primary'>
@@ -123,34 +105,11 @@ export const ProfilePage = () => {
                 onClick={() => setSelectedCard(post)} // Gửi dữ liệu Card tới Modal
                 currentUserId={userInfo.id}
                 onDelete={handleDeletePost}
+                voteSummary={post.voteSummary}
+                comments={post.comments}
               />
             ))}
           </div>
-
-          {/* Modal hiển thị nội dung của Card */}
-          {selectedCard && (
-            <Modal show={!!selectedCard} onClose={() => setSelectedCard(null)} ref={modalRef}>
-              <Modal.Header>{selectedCard.title}</Modal.Header>
-              <Modal.Body>
-                <p>{selectedCard.content}</p>
-                <div className="mt-4 text-sm text-gray-600">
-                  <p><strong>Author:</strong> {userInfo.username}</p>
-                  <p><strong>Categories:</strong> {
-                    selectedCard.categories?.map((category, index) => {
-                      return (<span key={index}>
-                        {category.name}
-                        {index < selectedCard.categories.length - 1 ? ", " : ""}
-                      </span>)
-                    })
-                  }</p>
-                  <p><strong>Created At:</strong> {new Date(selectedCard.createdAt).toLocaleDateString()}</p>
-                  <p><strong>Updated At:</strong> {new Date(selectedCard.updatedAt).toLocaleDateString()}</p>
-                </div>
-              </Modal.Body>
-              <Modal.Footer>
-              </Modal.Footer>
-            </Modal>
-          )}
         </div>
       </div>
     </div>

@@ -1,4 +1,5 @@
-const { Comment } = require('../../models');
+const { Comment, User } = require('../../models');
+
 
 const createComment = async(data) => {
     try {
@@ -24,7 +25,14 @@ const getCommentById = async(commentId) => {
 const getAllCommentsOfPost = async(postId) => {
     try {
         const comments = await Comment.findAll({
-            where: { postId: postId }
+            where: { postId: postId },
+            include: [
+                {
+                    model: User,
+                    as: 'author',
+                    attributes: ['username'],
+                },
+            ],
         })
         return comments
     } catch (error) {

@@ -56,6 +56,21 @@ const createVote = async(userId, postId, voteType) => {
     }
 }
 
+const getUserVote = async (postId, userId) => {
+    try {
+        const vote = await Vote.findOne({
+            where: {
+                postId: postId,
+                userId: userId
+            }
+        });
+        return vote ? vote.voteType : null; // Trả về 'up' hoặc 'down' hoặc null nếu chưa vote
+    } catch (error) {
+        throw new Error(`Failed to get user vote for post ${postId}: ${error.message}`);
+    }
+};
+
+
 const updateVote = async(userId, postId, voteType)  => {
     try {
         const existingVote = await Vote.findOne({
@@ -94,19 +109,29 @@ const updateVote = async(userId, postId, voteType)  => {
     }
 }
 
-const deleteVote = async(voteId, userId) => {
+const deleteVote = async(postId, userId) => {
     try {
-        const existingVote = await Vote.findByPk(voteId)
+        const existingVote = await Vote.findOne({
+            where: {
+                postId: postId,
+                userId: userId
+            }
+        })
         if (!existingVote) {
             throw new Error('You have not vote this post yet')
         }
         if(existingVote.userId != userId) {
             throw new Error('You are not authorized to unvote this post');
         }
-        await Vote.destroy({ where: { id: voteId } })
+        await Vote.destroy({ 
+            where: {
+                postId: postId,
+                userId: userId
+            }
+         })
     } catch (error) {
         throw new Error(error.message)
     }
 }
 
-module.exports = { createVote, deleteVote, updateVote, countVoteOfPost }
+module.exports = { createVote, deleteVote, updateVote, countVoteOfPost, getUserVote }
