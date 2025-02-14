@@ -3,8 +3,10 @@ const { Comment, User } = require('../../models');
 
 const createComment = async(data) => {
     try {
-        const comment = await Comment.create(data);
-        return comment;
+        const newComment = await Comment.create(data);
+        console.log (newComment.id)
+        const responseComment = getCommentById(newComment.id) 
+        return responseComment;
     } catch (error) {
         throw new Error(error.message);
     }
@@ -12,7 +14,16 @@ const createComment = async(data) => {
 
 const getCommentById = async(commentId) => {
     try {
-        const comment = await Comment.findByPk(commentId);
+        const comment = await Comment.findOne({
+            where: { id: commentId },
+            include: [
+                {
+                    model: User,
+                    as: 'author',
+                    attributes: ['username', 'id', 'fullName'],
+                },
+            ],
+        });
         if (!comment) {
             throw new Error('Comment does not exist')
         }
@@ -30,7 +41,7 @@ const getAllCommentsOfPost = async(postId) => {
                 {
                     model: User,
                     as: 'author',
-                    attributes: ['username'],
+                    attributes: ['username', 'id'],
                 },
             ],
         })
