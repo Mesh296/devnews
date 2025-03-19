@@ -7,7 +7,13 @@ const sequelize = new Sequelize({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     host: process.env.HOST,
-    dialect: 'postgres'
+    dialect: 'postgres',
+    pool: {
+        max: 10,         // Maximum number of connections in pool
+        min: 0,          // Minimum number of connections in pool
+        acquire: 30000,  // Maximum time (ms) to acquire a connection before throwing an error
+        idle: 10000      // Maximum time (ms) a connection can be idle before being released
+    }
 });
 
 async function testConnection() {
