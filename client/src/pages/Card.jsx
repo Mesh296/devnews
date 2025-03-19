@@ -1,3 +1,4 @@
+//Card.jsx
 import React, { useEffect, useState, useRef } from 'react';
 import { deletePost } from '../services/posts/postService';
 import { deleteComment, createComment, getAllCommentsOfPost } from '../services/posts/commentService';
@@ -232,16 +233,16 @@ export const Card = ({ postId, title, content, author, categories, createdAt, up
                         {/* Vote Summary and Comments */}
                         <div className="flex items-center justify-between mt-4">
                             <div className="flex items-center space-x-3">
-                                <button onClick={(e) => handleVote(e, 'up')} className={`flex items-center hover:text-green-600 ${userVote == 'up' ? 'text-green-600' : ''}`}>
+                                <button onClick={(e) => handleVote(e, 'up')} className={`flex items-center hover:text-green-600 ${userVote == 'up' ? 'text-green-600' : 'text-element-secondary'}`}>
                                     <FaArrowUp className="mr-1" />
                                     <span>{votes.upvotes}</span>
                                 </button>
-                                <button onClick={(e) => handleVote(e, 'down')} className={`flex items-center hover:text-red-600 ${userVote == 'down' ? 'text-red-600' : ''}`}>
+                                <button onClick={(e) => handleVote(e, 'down')} className={`flex items-center hover:text-red-600 ${userVote == 'down' ? 'text-red-600' : 'text-element-secondary'}`}>
                                     <FaArrowDown className="mr-1" />
                                     <span>{votes.downvotes}</span>
                                 </button>
                             </div>
-                            <div className="flex items-center">
+                            <div className="flex items-center space-x-2 text-element-secondary">
                                 <FaComment className="mr-1" />
                                 <span>{comments.length} Comments</span>
                             </div>
@@ -251,7 +252,13 @@ export const Card = ({ postId, title, content, author, categories, createdAt, up
                 </div>
             </div>
 
-            <Modal show={showModal} onClose={toggleModal} ref={modalRef}>
+            <Modal
+                show={showModal}
+                onClose={toggleModal}
+                ref={modalRef}
+                className={`transition-all duration-300 ease-in-out transform 
+             ${showModal ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}
+            >
                 <Modal.Header>{title}</Modal.Header>
                 <Modal.Body>
                     <div className=" text-sm text-element-secondary ">

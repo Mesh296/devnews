@@ -1,3 +1,4 @@
+//CreatePostPage.jsx
 import React from 'react'
 
 export const CreatePostPage = () => {
