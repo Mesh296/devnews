@@ -1,3 +1,4 @@
+//component/sidebar.jsx
 import React from 'react';
 import { useAuth } from '../context/AuthProvider';
 import { Link } from 'react-router-dom';
@@ -7,8 +8,8 @@ export const Sidebar = () => {
 
     return (
         <div className="fixed pt-16 bottom-0 left-0 w-full laptop:top-0 laptop:left-0 laptop:w-20 laptop:h-screen z-40">
-            <aside 
-                id="separator-sidebar" 
+            <aside
+                id="separator-sidebar"
                 className="h-14 laptop:h-full bg-surface transition-transform"
                 aria-label="Sidebar"
             >
@@ -38,15 +39,20 @@ export const Sidebar = () => {
                         </li>
 
                         {/* Logout Icon */}
-                        <li className='laptop:py-2'>
-                            <Link onClick={logoutUser} className="flex items-center justify-center">
-                                <div className="p-2 laptop:p-3 hover:bg-on-surface-1-hover transition-all duration-200 rounded-xl group">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-8 text-gray-400 group-hover:text-element-primary">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
-                                    </svg>
-                                </div>
-                            </Link>
-                        </li>
+                        {
+                            user &&
+                            (
+                                <li className='laptop:py-2'>
+                                    <Link onClick={logoutUser} className="flex items-center justify-center">
+                                        <div className="p-2 laptop:p-3 hover:bg-on-surface-1-hover transition-all duration-200 rounded-xl group">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-8 text-gray-400 group-hover:text-element-primary">
+                                                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+                                            </svg>
+                                        </div>
+                                    </Link>
+                                </li>
+                            )
+                        }
                     </ul>
                 </div>
             </aside>
