@@ -172,6 +172,7 @@ const getByUser = async (userId) => {
                 },
 
             ],
+            order: [['createdAt', 'DESC']],
             
         })
         const fullPost = await Promise.all(
@@ -217,6 +218,7 @@ const getAll = async () => {
                 },
 
             ],
+            order: [['createdAt', 'DESC']],
         });
 
         const fullPost = await Promise.all(
